@@ -11,7 +11,7 @@
 ###### prometheus-operator를 위한 custom resource definition 배포 여부 설정 (crds 서브 차트 설치)
 ###### default는 true
 crds:
-  enabled: true
+  enabled: false #!#!#! crd 배포 안하고 설치해보기
 
 
 ###### kube-prometheus-stack에서 기본 제공하는 recording rule과 alerting rule 설정
@@ -215,7 +215,7 @@ kubelet:
 ###### 생성되는 것 : Service, ServiceMonitor
 ###/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/##
 kubeControllerManager:
-  enabled: false
+  enabled: true  #!#!#! kube-controller-manager 모니터링 활성화가 되는지 테스트해보기
 
   ###### Metric 수집용 k8s controller manager service 생성
   service:
@@ -364,7 +364,7 @@ nodeExporter:
 prometheus-node-exporter:
   prometheus:
     monitor:
-      enabled: true
+      enabled: false    #!#!#! node-exporter의 servicemonitor 안만들고 설치해보기
 
       ###### __meta_kubernetes_pod_node_name 라벨의 키값을 node로 변경
       relabelings:
@@ -409,12 +409,12 @@ prometheusOperator:
       tolerations: *global-tolerations
 
   ###/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/##
-  ###### 위쪽에서, 루트 레벨 변수 이름이 kubelet인 부분은 ServiceMonitor만 활성화하고, 여기서는 Service를 활성화
+  ###### 이 파일의 186번째 줄부터 시작하는 kubelet 모니터링 설정은 ServiceMonitor만 활성화하고, 여기는 Service를 활성화
   ###### 여기에 정의하는 스펙은 prometheus-operator의 args에 지정되고, operator가 그 스펙에 맞게 리소스를 생성함
   ###### Managed by : prometheus-operator
   ###/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/#####/##
   kubeletService:
-    enabled: true
+    enabled: false   #!#!#! kubelet 서비스 안만들고 설치해보기
     namespace: kube-system
 
   ###### prometheus-operator 모니터링에 대한 설정 (prometheus-operator가 잘 작동하고 있는지)
